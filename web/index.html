@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartCity360 - Urban Operations Platform (Hashen Liyanaarachchi)</title>
+    <link rel="stylesheet" href="css/metro.css">
+</head>
+<body>
+
+    <!-- Top Navigation Header -->
+    <header class="top-header">
+        <div class="brand-wrapper">
+            <div class="brand-badge">SC360</div>
+            <div>
+                <span class="brand-title">SmartCity360</span>
+                <span class="brand-sub">Operations Console</span>
+            </div>
+        </div>
+
+        <nav class="nav-tabs">
+            <button class="nav-tab-btn active" data-target="tab-decorator">
+                <svg class="tab-icon" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+                <span>Part A: Security</span>
+            </button>
+            <button class="nav-tab-btn" data-target="tab-composite">
+                <svg class="tab-icon" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                <span>Part B: Power Grid</span>
+            </button>
+            <button class="nav-tab-btn" data-target="tab-chain">
+                <svg class="tab-icon" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+                <span>Part C: Complaints</span>
+            </button>
+            <button class="nav-tab-btn" data-target="tab-flyweight">
+                <svg class="tab-icon" viewBox="0 0 24 24"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"/></svg>
+                <span>Part D: Streetlights</span>
+            </button>
+            <button class="nav-tab-btn" data-target="tab-interpreter">
+                <svg class="tab-icon" viewBox="0 0 24 24"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg>
+                <span>Part E: Policies</span>
+            </button>
+        </nav>
+
+        <div class="header-actions">
+            <span class="candidate-pill">Hashen Liyanaarachchi</span>
+        </div>
+    </header>
+
+    <main class="main-container">
+
+        <!-- ============================================================== -->
+        <!-- PART A: DECORATOR PATTERN (STREAM SECURITY WRAPPERS)           -->
+        <!-- ============================================================== -->
+        <section id="tab-decorator" class="tab-content active">
+            <div class="module-header">
+                <div>
+                    <h2>Dynamic Security Wrappers for Urban Telemetry Streams</h2>
+                    <p>Dynamically wrap hardware sensor streams with Token Authentication, AES-256 Encryption, and GZIP Compression without altering core socket classes.</p>
+                </div>
+                <div class="pattern-badge">Structural Pattern: Decorator (GoF)</div>
+            </div>
+
+            <div class="stat-grid">
+                <div class="stat-tile">
+                    <div class="stat-label">Raw Payload Size</div>
+                    <div class="stat-value" id="streamRawSize">-- B</div>
+                    <div class="stat-desc">Plaintext telemetry buffer</div>
+                </div>
+                <div class="stat-tile">
+                    <div class="stat-label">Wire Transmitted Size</div>
+                    <div class="stat-value" id="streamWireSize">-- B</div>
+                    <div class="stat-desc">After security transformation</div>
+                </div>
+                <div class="stat-tile">
+                    <div class="stat-label">Hardware Socket</div>
+                    <div class="stat-value" style="color:var(--accent-amber); font-size:1.2rem;">GridMeterStream</div>
+                    <div class="stat-desc">Base component interface</div>
+                </div>
+            </div>
+
+            <div class="grid-2col">
+                <div class="card">
+                    <div class="card-title">Telemetry Stream Configuration</div>
+                    <div class="form-group">
+                        <label class="form-label" for="streamPayload">Telemetry Sensor Payload (JSON/Text):</label>
+                        <textarea id="streamPayload" class="form-textarea">{
+  "meterId": "EM-FORT-102",
+  "zone": "Colombo 01 Financial Sector",
+  "voltageVolts": 230.4,
+  "loadKw": 685.20,
+  "status": "OPERATIONAL"
+}</textarea>
+                    </div>
+
+                    <div class="checkbox-group">
+                        <label class="checkbox-item">
+                            <input type="checkbox" id="chkAuth" checked>
+                            <span><strong>Signature Authentication</strong> (SignatureAuthDecorator)</span>
+                        </label>
+                        <div style="margin-left: 2rem;">
+                            <input type="text" id="txtToken" class="form-input" value="TOKEN_AUTH_HASHEN_772" placeholder="Custom Access Token">
+                        </div>
+
+                        <label class="checkbox-item">
+                            <input type="checkbox" id="chkEncrypt" checked>
+                            <span><strong>AES-256 Symmetric Cipher</strong> (AESEncryptionDecorator)</span>
+                        </label>
+
+                        <label class="checkbox-item">
+                            <input type="checkbox" id="chkCompress" checked>
+                            <span><strong>GZIP Packet Compression</strong> (PayloadCompressionDecorator)</span>
+                        </label>
+                    </div>
+
+                    <button id="btnTransmitStream" class="btn-primary" style="width: 100%;">
+                        <svg class="tab-icon" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+                        <span>Execute Secured Data Transmission</span>
+                    </button>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">Transmission Pipeline &amp; Decipher Inspector</div>
+                    <div class="form-label">Active Decorator Pipeline Stack:</div>
+                    <div id="pipelineStagesList" class="pipeline-flow">
+                        <div class="pipeline-step"><span class="step-num">Layer 01:</span> <span>GridMeterStream</span></div>
+                    </div>
+
+                    <div class="form-group" style="margin-top: 1rem;">
+                        <label class="form-label">Transmitted Wire Payload (Over-The-Wire Stream):</label>
+                        <div id="wireOutputBox" class="output-box">Press Execute to transmit stream...</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Receiver Deciphered Buffer (Original Data Restored):</label>
+                        <div id="decipheredOutputBox" class="output-box" style="color:var(--accent-green);">Awaiting packet reception...</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================== -->
+        <!-- PART B: COMPOSITE PATTERN (POWER GRID HIERARCHY)               -->
+        <!-- ============================================================== -->
+        <section id="tab-composite" class="tab-content">
+            <div class="module-header">
+                <div>
+                    <h2>Hierarchical Structure of Smart Energy Zones</h2>
+                    <p>Treat individual facility substations and multi-tiered zonal districts uniformly to calculate aggregate demand and propagate power cut commands recursively.</p>
+                </div>
+                <div class="pattern-badge">Structural Pattern: Composite (GoF)</div>
+            </div>
+
+            <div class="stat-grid">
+                <div class="stat-tile">
+                    <div class="stat-label">Total Metropolitan Demand</div>
+                    <div class="stat-value" id="gridTotalDemand">-- kW</div>
+                    <div class="stat-desc">Recursive composite load aggregate</div>
+                </div>
+                <div class="stat-tile">
+                    <div class="stat-label">Metropolitan Grid State</div>
+                    <div id="gridStatusBadge" style="margin-top:0.5rem;">
+                        <span class="badge-energized">ACTIVE</span>
+                    </div>
+                    <div class="stat-desc">Feeder line breaker status</div>
+                </div>
+                <div class="stat-tile">
+                    <div class="stat-label">Hierarchical Topology</div>
+                    <div class="stat-value" style="color:var(--accent-cyan); font-size:1.2rem;">City &rarr; District &rarr; Street &rarr; Facility</div>
+                    <div class="stat-desc">Uniform tree interface (PowerGridComponent)</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">
+                    <span>Colombo Metropolitan Smart Grid Distribution Tree</span>
+                    <button id="btnRefreshGrid" class="btn-secondary">
+                        <svg class="btn-icon" viewBox="0 0 24 24"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+                        <span>Refresh Topology</span>
+                    </button>
+                </div>
+                <div id="gridTreeContainer">
+                    <!-- Dynamically populated by metro.js -->
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================== -->
+        <!-- PART C: CHAIN OF RESPONSIBILITY (CITIZEN COMPLAINT ESCALATION) -->
+        <!-- ============================================================== -->
+        <section id="tab-chain" class="tab-content">
+            <div class="module-header">
+                <div>
+                    <h2>Escalation Pipeline for Citizen Complaints</h2>
+                    <p>Decouple civic incident submission from resolution handling through a sequential chain of Front Desk, Zonal Supervisor, and Chief Municipal Officer.</p>
+                </div>
+                <div class="pattern-badge">Behavioral Pattern: Chain of Responsibility (GoF)</div>
+            </div>
+
+            <div class="grid-2col">
+                <div class="card">
+                    <div class="card-title">File Civic Incident Report</div>
+                    <form id="incidentForm">
+                        <div class="form-group">
+                            <label class="form-label" for="txtCitizenName">Citizen / Reporter Full Name:</label>
+                            <input type="text" id="txtCitizenName" class="form-input" required placeholder="e.g. Kasun Fernando">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="selSeverity">Incident Severity Classification:</label>
+                            <select id="selSeverity" class="form-select">
+                                <option value="MINOR">MINOR (Routine Municipal Maintenance - Handled by Front Desk)</option>
+                                <option value="URGENT">URGENT (Structural / District Disruption - Handled by Zonal Supervisor)</option>
+                                <option value="CRITICAL">CRITICAL (Metropolitan Emergency - Handled by Chief Municipal Officer)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="txtIncidentDetail">Incident Description &amp; Location:</label>
+                            <textarea id="txtIncidentDetail" class="form-textarea" required placeholder="Describe the civic hazard or defect in detail..."></textarea>
+                        </div>
+
+                        <button type="submit" class="btn-primary" style="width: 100%;">
+                            <svg class="tab-icon" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+                            <span>Submit Incident to Escalation Pipeline</span>
+                        </button>
+                    </form>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">Latest Escalation Resolution</div>
+                    <div id="latestResolutionCard" style="display:none;">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+                            <span style="font-family:var(--code-font); font-weight:700; color:var(--accent-cyan); font-size:1.1rem;" id="resTicketCode"></span>
+                            <span class="badge-energized">RESOLVED</span>
+                        </div>
+                        <p style="font-size:0.85rem; margin-bottom:0.4rem;"><strong>Reporter:</strong> <span id="resCitizen"></span></p>
+                        <p style="font-size:0.85rem; margin-bottom:0.4rem;"><strong>Severity:</strong> <span id="resSeverity"></span></p>
+                        <p style="font-size:0.85rem; margin-bottom:0.4rem;"><strong>Authorized Handler:</strong> <span id="resHandler" style="color:var(--accent-amber); font-weight:700;"></span></p>
+                        <p style="font-size:0.85rem; margin-bottom:0.8rem;"><strong>Department:</strong> <span id="resDept"></span></p>
+
+                        <div style="background-color:var(--bg-secondary); border-left:4px solid var(--accent-cyan); padding:0.75rem; border-radius:6px; margin-bottom:1rem;">
+                            <div style="font-size:0.75rem; font-weight:600; color:var(--text-muted);">DISPOSITION VERDICT:</div>
+                            <div id="resVerdict" style="font-size:0.88rem; font-weight:600; margin-top:0.2rem;"></div>
+                        </div>
+
+                        <div class="form-label">Escalation Audit Trail:</div>
+                        <div id="resAuditTrail" class="pipeline-flow"></div>
+                    </div>
+                    <div id="resolutionPlaceholder" style="text-align:center; padding:3rem 1rem; color:var(--text-muted);">
+                        Submit an incident report on the left or inspect the resolution audit table below.
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" style="margin-top:1.5rem;">
+                <div class="card-title">Municipal Incident Escalation History</div>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Ticket ID</th>
+                            <th>Citizen</th>
+                            <th>Issue Description</th>
+                            <th>Severity</th>
+                            <th>Resolved By</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ticketHistoryBody">
+                        <!-- Populated by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ============================================================== -->
+        <!-- PART D: FLYWEIGHT PATTERN (STREET LIGHT FLEET)                 -->
+        <!-- ============================================================== -->
+        <section id="tab-flyweight" class="tab-content">
+            <div class="module-header">
+                <div>
+                    <h2>Efficient Management of Smart Street Luminaires</h2>
+                    <p>Share heavy immutable intrinsic specifications (model, wattage, color temperature, manufacturer) across thousands of light poles, storing only light extrinsic coordinates in memory.</p>
+                </div>
+                <div class="pattern-badge">Structural Pattern: Flyweight (GoF)</div>
+            </div>
+
+            <div class="stat-grid">
+                <div class="stat-tile">
+                    <div class="stat-label">Total Luminaires Deployed</div>
+                    <div class="stat-value" id="lblTotalNodes">10,000</div>
+                    <div class="stat-desc">Light pole instances</div>
+                </div>
+                <div class="stat-tile">
+                    <div class="stat-label">Flyweight Specs in Pool</div>
+                    <div class="stat-value" id="lblFlyweightPool" style="color:var(--accent-amber);">2</div>
+                    <div class="stat-desc">LuminaireFactory cache count</div>
+                </div>
+                <div class="stat-tile">
+                    <div class="stat-label">RAM Memory Savings</div>
+                    <div class="stat-value" id="lblRamSavings" style="color:var(--accent-green);">75.0%</div>
+                    <div class="stat-desc">Flyweight memory reduction</div>
+                </div>
+                <div class="stat-tile">
+                    <div class="stat-label">Flyweight vs Naive RAM</div>
+                    <div class="stat-value" style="font-size:1.15rem; color:var(--text-primary);">
+                        <span id="lblMemoryWith">312.8 KB</span> / <span id="lblMemoryWithout" style="color:var(--accent-red);">1250.0 KB</span>
+                    </div>
+                    <div class="stat-desc">Shared vs duplicated memory</div>
+                </div>
+            </div>
+
+            <div class="grid-2col">
+                <div class="card">
+                    <div class="card-title">Mass Fleet Deployment Simulation</div>
+                    <div class="form-group">
+                        <label class="form-label" for="numFleetCount">Number of Street Luminaires to Deploy:</label>
+                        <select id="numFleetCount" class="form-select">
+                            <option value="5000">5,000 Poles</option>
+                            <option value="10000" selected>10,000 Poles</option>
+                            <option value="25000">25,000 Poles</option>
+                            <option value="50000">50,000 Poles</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="numHighmastPercent">Ratio of Cree HighMast 160W vs Syska 50W Solar (%):</label>
+                        <select id="numHighmastPercent" class="form-select">
+                            <option value="20">20% HighMast / 80% Solar</option>
+                            <option value="50" selected>50% HighMast / 50% Solar</option>
+                            <option value="80">80% HighMast / 20% Solar</option>
+                        </select>
+                    </div>
+
+                    <button id="btnDeployFleet" class="btn-primary" style="width: 100%;">
+                        <svg class="tab-icon" viewBox="0 0 24 24"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"/></svg>
+                        <span>Deploy Smart Streetlight Network</span>
+                    </button>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">Active Luminaire Nodes (Sample Stream)</div>
+                    <div id="poleSamplesGrid" class="pole-grid">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================== -->
+        <!-- PART E: INTERPRETER PATTERN (CITY POLICIES DSL)                -->
+        <!-- ============================================================== -->
+        <section id="tab-interpreter" class="tab-content">
+            <div class="module-header">
+                <div>
+                    <h2>Domain-Specific Language (DSL) for Municipal Bylaws</h2>
+                    <p>Parse and evaluate dynamic municipal regulations on noise thresholds, quiet hours, and parking limits at runtime without code recompilation.</p>
+                </div>
+                <div class="pattern-badge">Behavioral Pattern: Interpreter (GoF)</div>
+            </div>
+
+            <div class="grid-2col">
+                <div class="card">
+                    <div class="card-title">Urban Policy Configuration &amp; Sensor Inputs</div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="selPolicyMode">Select Municipal Regulation to Evaluate:</label>
+                        <select id="selPolicyMode" class="form-select">
+                            <option value="QUIET_HOURS" selected>Residential Night Quiet Hours (22:00 - 06:00, Noise &le; 50 dB)</option>
+                            <option value="PARKING">Commercial Zone Daytime Parking (08:00 - 18:00, Duration &le; 2 Hours)</option>
+                            <option value="COMBINED">Metropolitan Compound Bylaw (Night Quiet Hours OR Day Parking)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <div style="display:flex; justify-content:space-between;">
+                            <label class="form-label" for="rngCurrentHour">Urban Context - Hour of Day:</label>
+                            <span id="lblCurrentHour" style="font-family:var(--code-font); color:var(--accent-cyan); font-weight:700;">23:00 hrs</span>
+                        </div>
+                        <input type="range" id="rngCurrentHour" min="0" max="23" value="23" style="width:100%; accent-color:var(--accent-cyan);">
+                    </div>
+
+                    <div class="form-group">
+                        <div style="display:flex; justify-content:space-between;">
+                            <label class="form-label" for="rngNoise">Urban Context - Acoustic Noise Level:</label>
+                            <span id="lblNoise" style="font-family:var(--code-font); color:var(--accent-cyan); font-weight:700;">75 dB</span>
+                        </div>
+                        <input type="range" id="rngNoise" min="30" max="110" value="75" style="width:100%; accent-color:var(--accent-cyan);">
+                    </div>
+
+                    <div class="form-group">
+                        <div style="display:flex; justify-content:space-between;">
+                            <label class="form-label" for="rngParkedHours">Urban Context - Continuous Parking Duration:</label>
+                            <span id="lblParkedHours" style="font-family:var(--code-font); color:var(--accent-cyan); font-weight:700;">1 Hours</span>
+                        </div>
+                        <input type="range" id="rngParkedHours" min="0" max="8" value="1" style="width:100%; accent-color:var(--accent-cyan);">
+                    </div>
+
+                    <button id="btnEvaluatePolicy" class="btn-primary" style="width: 100%;">
+                        <svg class="tab-icon" viewBox="0 0 24 24"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg>
+                        <span>Evaluate Bylaw Compliance</span>
+                    </button>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">DSL AST &amp; Compliance Verdict</div>
+
+                    <div class="form-group">
+                        <div class="form-label">Rule Title:</div>
+                        <div id="policyRuleTitle" style="font-weight:600; font-size:0.95rem; color:var(--text-primary);">--</div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="form-label">Abstract Syntax Tree (AST) Grammar Representation:</div>
+                        <div id="policyAstExpr" class="output-box" style="color:var(--accent-amber); font-size:0.85rem; padding:0.75rem;">--</div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="form-label">Compliance Evaluation Outcome:</div>
+                        <div id="policyVerdictBox" style="background-color:var(--bg-secondary); border-left:4px solid var(--accent-green); padding:1rem; border-radius:8px;">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <p><strong>SmartCity360 - Urban Operations Platform</strong></p>
+        <p>Candidate: Hashen Liyanaarachchi &bull; Unit: Object Oriented Design Patterns II (JIAT/OODP II) &bull; Assessment ID: JIAT/OODP II /EX/01</p>
+    </footer>
+
+    <script src="js/metro.js"></script>
+</body>
+</html>
